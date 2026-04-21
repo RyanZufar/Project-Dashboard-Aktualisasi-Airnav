@@ -373,7 +373,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             });
         }
+        const getOptimalMax = (dataArray) => {
+            const maxVal = dataArray && dataArray.length > 0 ? Math.max(...dataArray) : 0;
+            if (maxVal === 0) return 10;
+            if (maxVal <= 50) return Math.ceil(maxVal / 5) * 5 + 5; 
+            if (maxVal <= 150) return Math.ceil(maxVal / 10) * 10 + 20; 
+            return Math.ceil(maxVal / 10) * 10 + 50; 
+        };
 
+        const initialMax = getOptimalMax(trendData.data);
         const trendChart = new Chart(ctx, {
             type: 'line',
             data: {
@@ -392,7 +400,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     legend: { display: false },
                     annotation: { annotations: annotations }
                 },
-                interaction: { mode: 'index', intersect: false }
+                interaction: { mode: 'index', intersect: false },
+                scales: {
+                    ...commonOptions.scales,
+                    y: {
+                        ...commonOptions.scales.y,
+                        max: initialMax
+                    }
+                }
             })
         });
 
@@ -402,7 +417,10 @@ document.addEventListener("DOMContentLoaded", function () {
             if (btn) {
                 btn.addEventListener('click', () => {
                     trendChart.data.datasets.forEach((ds, i) => trendChart.setDatasetVisibility(i, i === index));
+                    const activeDataset = trendChart.data.datasets[index].data;
+                    trendChart.options.scales.y.max = getOptimalMax(activeDataset);
                     trendChart.update();
+                    
                     trendButtons.forEach(t => {
                         const b = document.getElementById(`btn-trend-${t}`);
                         if (b) { b.classList.remove('active'); b.classList.add('inactive'); }
@@ -418,6 +436,19 @@ document.addEventListener("DOMContentLoaded", function () {
     const ctxArrDep = document.getElementById('arrDepChart');
     if (ctxArrDep) {
         const adData = data.chartArrDep || {};
+
+        const getOptimalMaxAd = (dataArray) => {
+            const maxVal = dataArray && dataArray.length > 0 ? Math.max(...dataArray) : 0;
+            if (maxVal === 0) return 10;
+            if (maxVal <= 50) return Math.ceil(maxVal / 5) * 5 + 5; 
+            if (maxVal <= 150) return Math.ceil(maxVal / 10) * 10 + 20; 
+            return Math.ceil(maxVal / 10) * 10 + 50; 
+        };
+
+        const maxArr = adData.arr && adData.arr.length > 0 ? Math.max(...adData.arr) : 0;
+        const maxDep = adData.dep && adData.dep.length > 0 ? Math.max(...adData.dep) : 0;
+        const initialMaxAd = getOptimalMaxAd([maxArr, maxDep]);
+
         const arrDepChart = new Chart(ctxArrDep.getContext('2d'), {
             type: 'line',
             data: {
@@ -430,7 +461,14 @@ document.addEventListener("DOMContentLoaded", function () {
             options: withDataLabels({
                 ...commonOptions,
                 plugins: { ...commonOptions.plugins, legend: { position: 'top', align: 'end' } },
-                interaction: { mode: 'index', intersect: false }
+                interaction: { mode: 'index', intersect: false },
+                scales: {
+                    ...commonOptions.scales,
+                    y: {
+                        ...commonOptions.scales.y,
+                        max: initialMaxAd
+                    }
+                }
             })
         });
 
@@ -441,6 +479,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 btn.addEventListener('click', () => {
                     arrDepChart.setDatasetVisibility(0, adButtons[key][0]);
                     arrDepChart.setDatasetVisibility(1, adButtons[key][1]);
+                    let activeData = [];
+                    if (key === 'all') {
+                        activeData = [Math.max(...(adData.arr || [0])), Math.max(...(adData.dep || [0]))];
+                    } else if (key === 'arr') {
+                        activeData = adData.arr || [];
+                    } else if (key === 'dep') {
+                        activeData = adData.dep || [];
+                    }
+                    arrDepChart.options.scales.y.max = getOptimalMaxAd(activeData);
+
                     arrDepChart.update();
                     Object.keys(adButtons).forEach(k => {
                         const b = document.getElementById(`btn-${k}`);
