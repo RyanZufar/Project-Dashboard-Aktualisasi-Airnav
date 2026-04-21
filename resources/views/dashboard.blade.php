@@ -1155,6 +1155,7 @@
             chartCategory: @json($chartCategory),
             peakHourfreq: @json($peakHourfreq),
             hourlyProfiles: @json($hourlyProfiles),
+            dayLabels: @json($dayLabels),
             dayOfWeekComposition: @json($dayOfWeekComposition ?? []),
             dayOfWeekData: @json($dayOfWeekData),
             avgDailyFlights: @json($avgDailyFlights),

@@ -630,7 +630,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         },
                         borderRadius: 8,
                         hoverBackgroundColor: COLOR_SECONDARY,
-                        clip: false,
+                        clip: true,
                         order: 1,
                         barPercentage: 0.7,
                         categoryPercentage: 0.8
@@ -640,7 +640,7 @@ document.addEventListener("DOMContentLoaded", function () {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                layout: { padding: { top: 30 } },
+                layout: { padding: { top: 30, bottom: 10 } },
                 onHover: (event, chartElement) => {
                     event.native.target.style.cursor = chartElement[0] ? 'pointer' : 'default';
                 },
@@ -658,7 +658,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         display: (c) => (c.dataset.data[c.dataIndex] || 0) > 0,
                         font: { family: "'Outfit', sans-serif", size: 11, weight: 'bold' },
                         formatter: (value) => Math.round(value).toLocaleString(),
-                        clamp: false
+                        clamp: false,
+                        offset: 4
                     }
                 },
                 scales: {
@@ -671,18 +672,19 @@ document.addEventListener("DOMContentLoaded", function () {
                         ticks: {
                             font: { family: "'Outfit', sans-serif", size: 10 },
                             color: '#b0bec5',
-                            padding: 4,
+                            padding: 8,
                             maxTicksLimit: 4,
                             callback: (v) => v.toLocaleString()
                         }
                     },
                     x: {
                         display: true,
-                        grid: { display: false },
+                        grid: { display: false, drawBorder: false },
                         border: { display: false },
                         ticks: {
-                            font: { family: "'Outfit', sans-serif", size: 12, weight: '800' },
-                            color: '#64748b'
+                            font: { family: "'Outfit', sans-serif", size: 12, weight: '700' },
+                            color: '#64748b',
+                            padding: 8
                         }
                     }
                 }
