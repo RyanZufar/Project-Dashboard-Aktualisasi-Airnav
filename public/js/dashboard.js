@@ -376,11 +376,14 @@ document.addEventListener("DOMContentLoaded", function () {
         const getOptimalMax = (dataArray) => {
             const maxVal = dataArray && dataArray.length > 0 ? Math.max(...dataArray) : 0;
             if (maxVal === 0) return 10;
-            if (maxVal <= 50) return Math.ceil(maxVal / 5) * 5 + 5; 
-            if (maxVal <= 150) return Math.ceil(maxVal / 10) * 10 + 20; 
-            return Math.ceil(maxVal / 10) * 10 + 50; 
+            if (maxVal < 100) {
+                return Math.ceil(maxVal / 5) * 5 + 5; 
+            } else if (maxVal < 1000) {
+                return Math.ceil(maxVal / 50) * 50 + 50; 
+            } else {
+                return Math.ceil(maxVal / 500) * 500 + 500;
+            }
         };
-
         const initialMax = getOptimalMax(trendData.data);
         const trendChart = new Chart(ctx, {
             type: 'line',
@@ -436,13 +439,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const ctxArrDep = document.getElementById('arrDepChart');
     if (ctxArrDep) {
         const adData = data.chartArrDep || {};
-
         const getOptimalMaxAd = (dataArray) => {
             const maxVal = dataArray && dataArray.length > 0 ? Math.max(...dataArray) : 0;
             if (maxVal === 0) return 10;
-            if (maxVal <= 50) return Math.ceil(maxVal / 5) * 5 + 5; 
-            if (maxVal <= 150) return Math.ceil(maxVal / 10) * 10 + 20; 
-            return Math.ceil(maxVal / 10) * 10 + 50; 
+            if (maxVal < 100) {
+                return Math.ceil(maxVal / 5) * 5 + 5; 
+            } else if (maxVal < 1000) {
+                return Math.ceil(maxVal / 50) * 50 + 50; 
+            } else {
+                return Math.ceil(maxVal / 500) * 500 + 500;
+            }
         };
 
         const maxArr = adData.arr && adData.arr.length > 0 ? Math.max(...adData.arr) : 0;
