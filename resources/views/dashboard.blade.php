@@ -619,34 +619,16 @@
                 </h3>
                 
                 <div class="flex items-center gap-1 sm:gap-2 bg-slate-50/80 p-1.5 rounded-xl border border-slate-200/60 shadow-sm ml-auto overflow-x-auto whitespace-nowrap">
-                    <!-- Branch Filter -->
-                    <select id="heatmapBranchFilter" class="appearance-none bg-transparent text-xs font-bold text-slate-600 focus:outline-none cursor-pointer hover:text-[#1F3C88] py-1.5 px-3 rounded-lg transition-colors">
-                        <option value="">-- Semua Cabang --</option>
-                        @foreach($cabangs as $cabang)
-                            <option value="{{ $cabang->kode_cabang }}" {{ (isset($reqBranch) && $reqBranch == $cabang->kode_cabang) ? 'selected' : '' }}>{{ $cabang->nama }}</option>
-                        @endforeach
+                    <!-- HIDDEN ELEMENTS FOR JAVASCRIPT COMPATIBILITY -->
+                    <!-- Elements are kept hidden so dashboard.js doesn't break when looking for them -->
+                    <select id="heatmapBranchFilter" class="hidden">
+                        <option value="{{ $reqBranch ?? '' }}" selected></option>
+                    </select>
+                    <select id="heatmapYearFilter" class="hidden">
+                        <option value="{{ $year ?? date('Y') }}" selected></option>
                     </select>
 
-                    <div class="w-px h-5 bg-slate-200 flex-shrink-0"></div>
-
-                    <!-- Year Filter -->
-                    <select id="heatmapYearFilter" class="appearance-none bg-transparent text-xs font-bold text-slate-600 focus:outline-none cursor-pointer hover:text-[#1F3C88] py-1.5 px-3 rounded-lg transition-colors">
-                        @foreach($availableDates as $y => $dates)
-                            <option value="{{ $y }}" {{ (isset($year) && $year == $y) ? 'selected' : '' }}>{{ $y }}</option>
-                        @endforeach
-                    </select>
-
-                    <div class="w-px h-5 bg-slate-200 flex-shrink-0"></div>
-
-                    <!-- Apply Button -->
-                    <button onclick="applyHeatmapFilter()" class="flex items-center gap-1.5 bg-[#1F3C88] hover:bg-[#162d6a] text-white text-xs font-bold py-1.5 px-3 rounded-lg transition-colors shadow-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                        Terapkan
-                    </button>
-
-                    <div class="w-px h-5 bg-slate-200 flex-shrink-0"></div>
-
-                    <!-- View Notes Button -->
+                    <!-- View Notes Button (Dipertahankan) -->
                     <button id="toggleNotesBtn" onclick="toggleHeatmapNotes()" class="flex items-center gap-1.5 bg-amber-50 hover:bg-amber-100 text-amber-700 text-xs font-bold py-1.5 px-3 rounded-lg transition-colors shadow-sm border border-amber-200/60">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                         <span>Catatan</span>
