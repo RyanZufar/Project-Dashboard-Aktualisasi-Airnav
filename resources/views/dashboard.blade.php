@@ -7,19 +7,20 @@
     <script src="{{ asset('js/libs/tailwindcss.js') }}"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style type="text/tailwindcss">
-        body { 
-            font-family: 'Poppins', sans-serif; 
-            overflow-x: hidden; 
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
-        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+
         body::-webkit-scrollbar {
-            display: none; /* Chrome, Safari and Opera */
+            display: none;
         }
 
-        .font-outfit { font-family: 'Outfit', sans-serif; }
+        .font-outfit {
+            font-family: 'Outfit', sans-serif;
+        }
         
-        /* Neo-Glass & Ambient Background */
         .glass-card {
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(20px);
@@ -606,9 +607,7 @@
         </x-kpi-card>
     </div>
 
-    <!-- 4. SECTION: Heatmap & Seasonal Analysis -->
     <div class="mb-10 animate-enter" style="animation-delay: 0.7s">
-        <!-- Heatmap (Full Width) -->
         <div class="w-full glass-card p-6 rounded-[2rem] relative hover:shadow-lg transition-all duration-300 border border-white/60">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                 <h3 class="font-bold text-[#1F3C88] flex items-center gap-2 text-sm uppercase tracking-wider font-outfit">
@@ -619,8 +618,6 @@
                 </h3>
                 
                 <div class="flex items-center gap-1 sm:gap-2 bg-slate-50/80 p-1.5 rounded-xl border border-slate-200/60 shadow-sm ml-auto overflow-x-auto whitespace-nowrap">
-                    <!-- HIDDEN ELEMENTS FOR JAVASCRIPT COMPATIBILITY -->
-                    <!-- Elements are kept hidden so dashboard.js doesn't break when looking for them -->
                     <select id="heatmapBranchFilter" class="hidden">
                         <option value="{{ $reqBranch ?? '' }}" selected></option>
                     </select>
