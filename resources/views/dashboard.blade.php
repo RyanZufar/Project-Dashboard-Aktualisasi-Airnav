@@ -12,6 +12,7 @@
             overflow-x: hidden;
             -ms-overflow-style: none;
             scrollbar-width: none;
+        }
 
         body::-webkit-scrollbar {
             display: none;
@@ -200,9 +201,9 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             
             <!-- Card 1: Total Flights -->
-            <x-kpi-card 
-                title="Total Penerbangan" 
-                value="{{ number_format($totalFlights) }}" 
+            <x-kpi-card
+                title="Total Penerbangan"
+                value="{{ number_format($totalFlights) }}"
                 iconBg="bg-blue-50" iconColor="text-[#1F3C88]"
                 growth="{{ $growthPercentage }}"
                 growthText="vs periode lalu"
@@ -213,9 +214,9 @@
             </x-kpi-card>
 
             <!-- Card 2: Highest Peak -->
-            <x-kpi-card 
-                title="Puncak Tertinggi" 
-                value="{{ $highestPeak['count'] }}" 
+            <x-kpi-card
+                title="Puncak Tertinggi"
+                value="{{ $highestPeak['count'] }}"
                 iconBg="bg-amber-50" iconColor="text-[#FDBE33]"
             >
                 <x-slot name="icon">
@@ -235,10 +236,10 @@
             </x-kpi-card>
 
              <!-- Card 3: Capacity Utilization -->
-             <x-kpi-card 
-                title="Kesehatan Kapasitas" 
-                value="{{ $capacityUtilization }}%" 
-                iconBg="{{ $capacityUtilization > 80 ? 'bg-rose-50' : ($capacityUtilization > 60 ? 'bg-amber-50' : 'bg-emerald-50') }}" 
+             <x-kpi-card
+                title="Kesehatan Kapasitas"
+                value="{{ $capacityUtilization }}%"
+                iconBg="{{ $capacityUtilization > 80 ? 'bg-rose-50' : ($capacityUtilization > 60 ? 'bg-amber-50' : 'bg-emerald-50') }}"
                 iconColor="{{ $capacityUtilization > 80 ? 'text-rose-500' : ($capacityUtilization > 60 ? 'text-amber-500' : 'text-emerald-500') }}"
             >
                 <x-slot name="icon">
@@ -253,16 +254,16 @@
                         <span class="text-[10px] text-slate-400 font-medium">Batas: < 80%</span>
                     </div>
                     <div class="w-full bg-slate-100/80 rounded-full h-2 overflow-hidden shadow-inner">
-                        <div class="h-full rounded-full transition-all duration-1000 ease-out {{ $capacityUtilization > 80 ? 'bg-rose-500 shadow-[0_0_10px_rgba(244,63,94,0.4)]' : ($capacityUtilization > 60 ? 'bg-[#FDBE33] shadow-[0_0_10px_rgba(253,190,51,0.4)]' : 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.4)]') }}" 
+                        <div class="h-full rounded-full transition-all duration-1000 ease-out {{ $capacityUtilization > 80 ? 'bg-rose-500 shadow-[0_0_10px_rgba(244,63,94,0.4)]' : ($capacityUtilization > 60 ? 'bg-[#FDBE33] shadow-[0_0_10px_rgba(253,190,51,0.4)]' : 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.4)]') }}"
                              style="width: {{ min($capacityUtilization, 100) }}%"></div>
                     </div>
                 </div>
             </x-kpi-card>
 
              <!-- Card 4: Operations Profile -->
-             <x-kpi-card 
-                title="Rata-rata Harian" 
-                value="{{ $avgDailyFlights }}" 
+             <x-kpi-card
+                title="Rata-rata Harian"
+                value="{{ $avgDailyFlights }}"
                 iconBg="bg-indigo-50" iconColor="text-indigo-600"
              >
                 <x-slot name="icon">
@@ -323,21 +324,21 @@
                             $trainPct = $totalFlights > 0 ? round(($chartCategory['training'] / $totalFlights) * 100, 1) : 0;
                         @endphp
                         <div class="flex justify-between text-sm items-center group cursor-default">
-                            <span class="flex items-center gap-2 text-slate-600 font-medium text-xs uppercase tracking-wider"><span class="w-2 h-2 bg-[#10b981] rounded-full ring-2 ring-emerald-50 group-hover:ring-emerald-100 transition"></span> Domestik</span> 
+                            <span class="flex items-center gap-2 text-slate-600 font-medium text-xs uppercase tracking-wider"><span class="w-2 h-2 bg-[#10b981] rounded-full ring-2 ring-emerald-50 group-hover:ring-emerald-100 transition"></span> Domestik</span>
                             <div class="flex items-center gap-1.5">
                                 <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">{{ $domPct }}%</span>
                                 <span class="font-bold text-slate-700 bg-slate-50 px-2 py-0.5 rounded font-outfit">{{ number_format($chartCategory['dom']) }}</span>
                             </div>
                         </div>
                         <div class="flex justify-between text-sm items-center group cursor-default">
-                            <span class="flex items-center gap-2 text-slate-600 font-medium text-xs uppercase tracking-wider"><span class="w-2 h-2 bg-[#f59e0b] rounded-full ring-2 ring-amber-50 group-hover:ring-amber-100 transition"></span> Internasional</span> 
+                            <span class="flex items-center gap-2 text-slate-600 font-medium text-xs uppercase tracking-wider"><span class="w-2 h-2 bg-[#f59e0b] rounded-full ring-2 ring-amber-50 group-hover:ring-amber-100 transition"></span> Internasional</span>
                             <div class="flex items-center gap-1.5">
                                 <span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded">{{ $intPct }}%</span>
                                 <span class="font-bold text-slate-700 bg-slate-50 px-2 py-0.5 rounded font-outfit">{{ number_format($chartCategory['int']) }}</span>
                             </div>
                         </div>
                         <div class="flex justify-between text-sm items-center group cursor-default">
-                            <span class="flex items-center gap-2 text-slate-600 font-medium text-xs uppercase tracking-wider"><span class="w-2 h-2 bg-purple-500 rounded-full ring-2 ring-purple-50 group-hover:ring-purple-100 transition"></span> Training</span> 
+                            <span class="flex items-center gap-2 text-slate-600 font-medium text-xs uppercase tracking-wider"><span class="w-2 h-2 bg-purple-500 rounded-full ring-2 ring-purple-50 group-hover:ring-purple-100 transition"></span> Training</span>
                             <div class="flex items-center gap-1.5">
                                 <span class="text-[10px] font-bold text-purple-600 bg-purple-50 px-1.5 py-0.5 rounded">{{ $trainPct }}%</span>
                                 <span class="font-bold text-slate-700 bg-slate-50 px-2 py-0.5 rounded font-outfit">{{ number_format($chartCategory['training']) }}</span>
@@ -547,9 +548,9 @@
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10 animate-enter" style="animation-delay: 0.5s">
         <!-- Card 1: Total Flights Growth -->
-        <x-kpi-card 
-            title="Total Penerbangan" 
-            value="0" 
+        <x-kpi-card
+            title="Total Penerbangan"
+            value="0"
             iconBg="bg-blue-50" iconColor="text-blue-600"
             growth="0"
             growthText="vs -"
@@ -562,9 +563,9 @@
         </x-kpi-card>
 
         <!-- Card 2: Avg Daily Traffic -->
-        <x-kpi-card 
-            title="Rata-rata/Hari" 
-            value="0" 
+        <x-kpi-card
+            title="Rata-rata/Hari"
+            value="0"
             iconBg="bg-indigo-50" iconColor="text-indigo-600"
             growth="0"
             growthText="vs -"
@@ -577,9 +578,9 @@
         </x-kpi-card>
 
         <!-- Card 3: Peak Day Traffic -->
-        <x-kpi-card 
-            title="Puncak Harian" 
-            value="0" 
+        <x-kpi-card
+            title="Puncak Harian"
+            value="0"
             iconBg="bg-amber-50" iconColor="text-amber-600"
             growth="0"
             growthText="vs -"
@@ -592,9 +593,9 @@
         </x-kpi-card>
 
         <!-- Card 4: Peak Hour -->
-        <x-kpi-card 
-            title="Puncak Jam" 
-            value="0" 
+        <x-kpi-card
+            title="Puncak Jam"
+            value="0"
             iconBg="bg-rose-50" iconColor="text-rose-600"
             growth="0"
             growthText="vs -"
@@ -617,15 +618,7 @@
                     Heatmap Kesibukan
                 </h3>
                 
-                <div class="flex items-center gap-1 sm:gap-2 bg-slate-50/80 p-1.5 rounded-xl border border-slate-200/60 shadow-sm ml-auto overflow-x-auto whitespace-nowrap">
-                    <select id="heatmapBranchFilter" class="hidden">
-                        <option value="{{ $reqBranch ?? '' }}" selected></option>
-                    </select>
-                    <select id="heatmapYearFilter" class="hidden">
-                        <option value="{{ $year ?? date('Y') }}" selected></option>
-                    </select>
-
-                    <!-- View Notes Button (Dipertahankan) -->
+                <div class="flex items-center gap-2 ml-auto">
                     <button id="toggleNotesBtn" onclick="toggleHeatmapNotes()" class="flex items-center gap-1.5 bg-amber-50 hover:bg-amber-100 text-amber-700 text-xs font-bold py-1.5 px-3 rounded-lg transition-colors shadow-sm border border-amber-200/60">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                         <span>Catatan</span>
@@ -848,7 +841,7 @@
                                     <div class="flex justify-between items-center mt-1">
                                         <span id="saveNoteStatus" class="text-[10px] font-medium text-emerald-500 opacity-0 transition-opacity">✔ Tersimpan</span>
                                         <button type="button" id="saveNoteBtn" onclick="saveHeatmapNote()" class="px-3 py-1.5 bg-[#1F3C88] hover:bg-blue-800 text-white text-[10px] font-bold rounded-lg shadow-sm shadow-blue-900/20 transition-all active:scale-95 flex items-center gap-1">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path d="M7.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V6h5a2 2 0 012 2v7a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h5v5.586L7.707 10.293z"/></svg> 
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path d="M7.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V6h5a2 2 0 012 2v7a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h5v5.586L7.707 10.293z"/></svg>
                                             Simpan
                                         </button>
                                     </div>
@@ -1112,17 +1105,12 @@
         </div>
     </div>
 
-    <!-- Consolidated Chart Scripts -->
-    <!-- External Libraries (Local) -->
-
-    <!-- Local Libraries (Must Load BEFORE Dashboard Scripts) -->
     <script src="{{ asset('js/libs/hammer.min.js') }}"></script>
     <script src="{{ asset('js/libs/chart.umd.min.js') }}"></script>
     <script src="{{ asset('js/libs/chartjs-plugin-datalabels.min.js') }}"></script>
     <script src="{{ asset('js/libs/chartjs-plugin-annotation.min.js') }}"></script>
     <script src="{{ asset('js/libs/chartjs-plugin-zoom.min.js') }}"></script>
 
-    <!-- Dashboard Data & Logic -->
     <script>
         window.DashboardData = {
             chartTrend: @json($chartTrend),

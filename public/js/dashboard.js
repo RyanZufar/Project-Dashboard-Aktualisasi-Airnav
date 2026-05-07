@@ -1704,8 +1704,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
                 // Re-render heatmap to remove dot indicator
-                const yearEl = document.getElementById('heatmapYearFilter');
-                const targetYear = yearEl ? yearEl.value : new Date().getFullYear();
+                const targetYear = window.DashboardData.year || new Date().getFullYear();
                 renderHeatmap(targetYear, 'year');
             }
         })
@@ -1843,47 +1842,16 @@ document.addEventListener("DOMContentLoaded", function () {
         if (el) el.addEventListener('change', updateGlobalKPIs);
     });
 
-    // Initial Render Heatmap using the dedicated heatmap year filter
-    const hmYearEl = document.getElementById('heatmapYearFilter');
-    const hmBranchEl = document.getElementById('heatmapBranchFilter');
+   // Initial Render Heatmap
+    // Menggunakan data tahun global dari DashboardData
+    let initHmYear = data.year || new Date().getFullYear();
 
-    // Determine initial year: use dedicated heatmap filter, then page-level year, then latest in data
-    let initHmYear = (hmYearEl && hmYearEl.value) ? hmYearEl.value : null;
-
-    if (!initHmYear && data.heatmapData && data.heatmapData.length > 0) {
+    if (!data.year && data.heatmapData && data.heatmapData.length > 0) {
         initHmYear = Math.max(...data.heatmapData.map(d => parseInt(d.year) || 0));
-    }
-    if (!initHmYear || initHmYear === 0) {
-        initHmYear = new Date().getFullYear();
     }
 
     renderHeatmap(initHmYear, 'year');
-
-    // Expose to global scope so applyHeatmapFilter (defined outside) can access it
-    window._renderHeatmap = renderHeatmap;
 });
-
-// Dedicated filter for Heatmap section (Year + Branch only, triggered by "Terapkan" button)
-window.applyHeatmapFilter = function () {
-    const hmYearEl = document.getElementById('heatmapYearFilter');
-    const hmBranchEl = document.getElementById('heatmapBranchFilter');
-
-    const selectedYear = (hmYearEl && hmYearEl.value) ? hmYearEl.value : new Date().getFullYear();
-    const selectedBranch = hmBranchEl ? hmBranchEl.value : '';
-
-    // Filter the client-side heatmapData by selected branch
-    const allData = window._heatmapData || [];
-    const filtered = selectedBranch
-        ? allData.filter(d => d.branch_code === selectedBranch)
-        : allData;
-
-    const dataToRender = filtered.length > 0 ? filtered : allData;
-
-    // Re-render with the chosen year and filtered data
-    if (typeof window._renderHeatmap === 'function') {
-        window._renderHeatmap(selectedYear, 'year', dataToRender);
-    }
-};
 
 // Global Function to Save Note from Modal using AJAX
 window.saveHeatmapNote = function () {
